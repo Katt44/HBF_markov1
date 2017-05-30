@@ -15,7 +15,7 @@ def open_and_read_file(file_path):
     with open(file_path) as text_file:
 
         text = text_file.read()
-        print text
+        #print text
         return text
 
 def make_chains(text_string):
@@ -41,8 +41,28 @@ def make_chains(text_string):
     """
 
     chains = {}
+    #pseudo code
+    #need a for loop that gets index and word except for the last two, using enumerate
+    
+    #create dict using bigram as keys and a list of ngrams as values.
+    #just forming keys here
+    # var = (word, word[idx+1])
+    words = text_string.split()
+    for idx, word in enumerate(words[:-2]):
+        #print idx, word
+        bigram = (word, words[idx + 1])
+        #print bigram
+        if bigram not in chains:
+            #print bigram
+            chains[bigram] = list()
+        #for 
+            chains[bigram].append(words[idx + 2])
+            # hey what happens when the words in the tuple are in our dictionary
+    print chains
 
-    # your code goes here
+        
+    # for bigram value in chains.items():
+    #     chains[bigram] = value
 
     return chains
 
