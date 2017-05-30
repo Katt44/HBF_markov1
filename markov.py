@@ -11,10 +11,12 @@ def open_and_read_file(file_path):
     the file's contents as one string of text.
     """
 
-    # your code goes here
 
-    return "Contents of your file as one long string"
+    with open(file_path) as text_file:
 
+        text = text_file.read()
+        print text
+        return text
 
 def make_chains(text_string):
     """Takes input text as string; returns dictionary of markov chains.
