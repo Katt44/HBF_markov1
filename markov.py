@@ -48,6 +48,7 @@ def make_chains(text_string):
     #just forming keys here
     # var = (word, word[idx+1])
     words = text_string.split()
+    #print words
     for idx, word in enumerate(words[:-2]):
         #print idx, word
         bigram = (word, words[idx + 1])
@@ -58,9 +59,13 @@ def make_chains(text_string):
         #for 
             chains[bigram].append(words[idx + 2])
             # hey what happens when the words in the tuple are in our dictionary
+        elif bigram in chains:
+            chains[bigram].append(words[idx + 2])
+
     print chains
 
-        
+    
+         
     # for bigram value in chains.items():
     #     chains[bigram] = value
 
