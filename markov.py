@@ -62,7 +62,7 @@ def make_chains(text_string):
         elif bigram in chains:
             chains[bigram].append(words[idx + 2])
 
-    print chains
+    #print chains
 
     
          
@@ -77,7 +77,22 @@ def make_text(chains):
 
     words = []
 
-    # your code goes here
+    # this needs to be in a while loop
+    #need a way to check if keys have been used before
+    #if not used before then we want  A random value associated with that key
+    key = choice(chains.keys())
+    words.append(key[0])
+    words.append(key[1])
+    # print key
+    words.append(choice(chains[key]))
+    #hey this is the initial set up for randomizes tuples by first breaking them
+    # for key in chains:
+    #     bigram_link = choice(key)
+    #     words.append(bigram_link)
+    #     for value in chains.keys():
+    #         ngram_link = choice(value)
+    #         print ngram_link
+    #print words
 
     return " ".join(words)
 
