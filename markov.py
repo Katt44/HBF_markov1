@@ -41,33 +41,28 @@ def make_chains(text_string):
     """
 
     chains = {}
-    #pseudo code
-    #need a for loop that gets index and word except for the last two, using enumerate
-    
-    #create dict using bigram as keys and a list of ngrams as values.
-    #just forming keys here
-    # var = (word, word[idx+1])
+ 
     words = text_string.split()
-    #print words
+    
     for idx, word in enumerate(words[:-2]):
-        #print idx, word
+      
         bigram = (word, words[idx + 1])
-        #print bigram
+ 
         if bigram not in chains:
-            #print bigram
+
             chains[bigram] = list()
-        #for 
-            chains[bigram].append(words[idx + 2])
-            # hey what happens when the words in the tuple are in our dictionary
-        elif bigram in chains:
             chains[bigram].append(words[idx + 2])
 
-    #print chains
+        
+        elif bigram in chains:
+
+            chains[bigram].append(words[idx + 2])
+
+   
 
     
          
-    # for bigram value in chains.items():
-    #     chains[bigram] = value
+
 
     return chains
 
@@ -75,24 +70,18 @@ def make_chains(text_string):
 def make_text(chains):
     """Returns text from chains."""
 
-    words = []
+    
+    key = choice(chains.keys()) #this is the random start tuple
+    words = list(key)
+    # words.append(key[0]) # adding to a list where the tuples already exists
+    # words.append(key[1])# this will put duplicates at the beginning
+  
+    while key in chains:
+        words.append(choice(chains[key]))
+        key = (words[-2], words[-1]) # this creates the new key to continue the chain
+       
 
-    # this needs to be in a while loop
-    #need a way to check if keys have been used before
-    #if not used before then we want  A random value associated with that key
-    key = choice(chains.keys())
-    words.append(key[0])
-    words.append(key[1])
-    # print key
-    words.append(choice(chains[key]))
-    #hey this is the initial set up for randomizes tuples by first breaking them
-    # for key in chains:
-    #     bigram_link = choice(key)
-    #     words.append(bigram_link)
-    #     for value in chains.keys():
-    #         ngram_link = choice(value)
-    #         print ngram_link
-    #print words
+
 
     return " ".join(words)
 
