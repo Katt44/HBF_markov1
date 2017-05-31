@@ -2,6 +2,7 @@
 
 
 from random import choice
+import sys
 
 
 def open_and_read_file(file_path):
@@ -44,26 +45,27 @@ def make_chains(text_string):
  
     words = text_string.split()
     
-    for idx, word in enumerate(words[:-2]):
+    for idx, word in enumerate(words[:-3]):
       
-        bigram = (word, words[idx + 1])
- 
-        if bigram not in chains:
+        # bigram = (word, words[idx + 1])
+        trigram = (word, words[idx + 1], words[idx +2])
+        if trigram not in chains:
 
-            chains[bigram] = list()
-            chains[bigram].append(words[idx + 2])
+            chains[trigram] = list()
+            chains[trigram].append(words[idx + 3])
+
 
         
-        elif bigram in chains:
+        elif trigram in chains:
 
-            chains[bigram].append(words[idx + 2])
+            chains[trigram].append(words[idx + 3])
 
    
 
     
          
 
-
+    #print chains
     return chains
 
 
@@ -78,7 +80,7 @@ def make_text(chains):
   
     while key in chains:
         words.append(choice(chains[key]))
-        key = (words[-2], words[-1]) # this creates the new key to continue the chain
+        key = (words[-3], words[-2], words[-1]) # this creates the new key to continue the chain
        
 
 
@@ -86,8 +88,8 @@ def make_text(chains):
     return " ".join(words)
 
 
-input_path = "green-eggs.txt"
-
+#input_path = "hobbit.txt"
+input_path = sys.argv[1]
 # Open the file and turn it into one long string
 input_text = open_and_read_file(input_path)
 
