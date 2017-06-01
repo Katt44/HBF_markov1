@@ -3,6 +3,8 @@
 
 from random import choice
 import sys
+import twitter
+import os
 
 
 def open_and_read_file(file_path):
@@ -45,8 +47,8 @@ def make_chains(text_string):
  
     words = text_string.split()
     
-    for idx, word in enumerate(words[:-3]):
-      
+    for idx, word in enumerate(words[:-3]): # going thru by increments of 3 
+    #for idx, word in enumerate(words[:-2]):
         # bigram = (word, words[idx + 1])
         trigram = (word, words[idx + 1], words[idx +2])
         if trigram not in chains:
@@ -60,7 +62,17 @@ def make_chains(text_string):
 
             chains[trigram].append(words[idx + 3])
 
-   
+        # if bigram not in chains:
+
+        #         chains[bigram] = list()
+        #         chains[bigram].append(words[idx + 2])
+
+
+            
+        #     elif trigram in chains:
+
+        #         chains[trigram].append(words[idx + 2])
+
 
     
          
@@ -99,4 +111,28 @@ chains = make_chains(input_text)
 # Produce random text
 random_text = make_text(chains)
 
-print random_text
+
+print random_text[:140]
+
+api = twitter.Api(
+    consumer_key=os.environ["TWITTER_CONSUMER_KEY"],
+    consumer_secret=os.environ["TWITTER_CONSUMER_SECRET"],
+    access_token_key=os.environ["TWITTER_ACCESS_TOKEN_KEY"],
+    access_token_secret=os.environ["TWITTER_ACCESS_TOKEN_SECRET"])
+
+is_quit = None # this initializes the variable set 
+#to any value that doesnt break the loop, 
+#its later changed to break the loop.
+
+while is_quit != 'q' and is_quit != 'quit':
+
+    random_text = make_text(chains)
+    # print random_text[:140]
+    status = api.PostUpdate(random_text[:140])
+
+    print status.text
+    is_quit = raw_input("Enter to tweet again [q to quit]") 
+
+#print api.VerifyCredentials()
+
+
